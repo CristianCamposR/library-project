@@ -104,7 +104,7 @@ El frontend estará disponible en http://localhost:4200.
 Una vez que ambos servidores (backend y frontend) estén en ejecución, puedes acceder a la aplicación a través de tu navegador en http://localhost:4200.e
 
 
-### Endpoints del Backend
+### Funcionalidades
 
 ## Libros
 
@@ -116,7 +116,7 @@ Una vez que ambos servidores (backend y frontend) estén en ejecución, puedes a
 | PUT    | /api/books/{id} | Actualiza un libro existente | ✅ | ✅ |
 | DELETE | /api/books/{id} | Elimina un libro por su ID | ✅ | ✅ |
 
-## Loan
+## Prestamos
 
 | Método | Endpoint | Descripción | Backend | Frontend |
 |--------|----------|-------------|---------|----------| 
