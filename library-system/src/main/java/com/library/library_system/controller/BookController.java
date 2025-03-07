@@ -3,9 +3,11 @@ package com.library.library_system.controller;
 import com.library.library_system.model.Book;
 import com.library.library_system.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
@@ -15,28 +17,28 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks(){
+    public ResponseEntity<List<Book>> getAllBooks() {
         return bookService.findAll();
     }
 
     @GetMapping("/{id}") // GET /api/books/{id}
-    public Book getBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
     @PostMapping // POST /api/books
-    public void addBook(@RequestBody Book book) {
-        bookService.save(book);
+    public ResponseEntity<Map<String, String>> addBook(@RequestBody Book book) {
+        return bookService.save(book);
     }
 
     @PutMapping("/{id}") // PUT /api/books/{id}
-    public void updateBook(@PathVariable Long id, @RequestBody Book book) {
+    public ResponseEntity<Map<String, String>> updateBook(@PathVariable Long id, @RequestBody Book book) {
         book.setId(id); // Asegura que el ID sea el correcto
-        bookService.save(book);
+        return bookService.save(book);
     }
 
     @DeleteMapping("/{id}") // DELETE /api/books/{id}
-    public void deleteBook(@PathVariable Long id) {
-        bookService.delete(id);
+    public ResponseEntity<Map<String, String>> deleteBook(@PathVariable Long id) {
+        return bookService.delete(id);
     }
 }
