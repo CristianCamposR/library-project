@@ -28,7 +28,7 @@ public class LoanService {
         if (loan.getId() == null) {
             loan.setLoanDate(new Date()); // Fecha actual como fecha de préstamo
             loanRepository.insert(loan);
-            bookService.decrementAvailable(loan.getBookId()); // Disminuye la cantidad disponible
+            bookService.decrementAvailable(loan.getBook().getId()); // Disminuye la cantidad disponible
         } else {
             loanRepository.update(loan);
         }
@@ -39,7 +39,7 @@ public class LoanService {
         if (loan != null) {
             loan.setReturnDate(new Date()); // Fecha actual como fecha de devolución
             loanRepository.update(loan);
-            bookService.incrementAvailable(loan.getBookId()); // Aumenta la cantidad disponible
+            bookService.incrementAvailable(loan.getBook().getId()); // Aumenta la cantidad disponible
         }
     }
 

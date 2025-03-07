@@ -30,9 +30,9 @@ export class BookListComponent {
   }
 
   goToCreate() {
-    this.router.navigate(['/create']);
+    this.router.navigate(['book/create']);
   }
   goToEdit(id: number){
-    this.router.navigate(['/edit', id]);
+    this.router.navigate(['book/edit', id]);
   }
 }

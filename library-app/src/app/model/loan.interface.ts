@@ -1,7 +1,10 @@
-export interface Loan{
+import { Book } from './book.interface';
+import { Student } from './student.interface';
+
+export interface Loan {
     id: number;
-    bookId: number;
-    studentId: number;
+    book: Book
+    student: Student;
     loanDate: string;
     returnDate: string;
 }

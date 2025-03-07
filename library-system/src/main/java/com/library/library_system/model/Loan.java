@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Loan {
     private Long id;
-    private Long bookId;
-    private Long studentId;
+    private  Book book;
+    private Student student;
     private Date loanDate;
     private Date returnDate;
 
@@ -13,15 +13,15 @@ public class Loan {
     public Loan() {}
 
     // Constructor con parámetros
-    public Loan(Long id, Long bookId, Long studentId, Date loanDate, Date returnDate) {
+
+    public Loan(Long id, Book book, Student student, Date loanDate, Date returnDate) {
         this.id = id;
-        this.bookId = bookId;
-        this.studentId = studentId;
+        this.book = book;
+        this.student = student;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -30,20 +30,20 @@ public class Loan {
         this.id = id;
     }
 
-    public Long getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Date getLoanDate() {
