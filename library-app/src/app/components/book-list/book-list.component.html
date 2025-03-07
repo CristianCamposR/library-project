@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>Lista de Libros</h2>
+  <button class="btn btn-primary btn-sm" (click)="goToCreate()">
+    Agregar libro
+  </button>
+  @if (books.length > 0){
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>ISBN</th>
+        <th>Cantidad</th>
+        <th>Disponibles</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (book of books; track book.id) {
+      <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.quantity }}</td>
+        <td>{{ book.available }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm me-2" (click)="goToEdit(book.id)">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else {
+  <h1>Sin registros.</h1>
+  <p>Registra un nuevo libro para ver algo aquí!!</p>
+  }
+</div>

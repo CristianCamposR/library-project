@@ -1,0 +1,53 @@
+<div class="container mx-auto">
+  <h1 class="mb-3">
+    {{ isEdit ? "Editar" : "Registrar" }} libro
+  </h1>
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label class="form-label">Titulo</label>
+      <input
+        formControlName="title"
+        type="text"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <label class="form-label">Autor</label>
+      <input
+        formControlName="author"
+        type="text"
+        class="form-control"
+      />
+    </div>
+    <div>
+        <label class="form-label">ISBN</label>
+        <input
+          formControlName="isbn"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div>
+        <label class="form-label">Stock</label>
+        <input
+          formControlName="quantity"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div>
+        <label class="form-label">Stock para prestamo</label>
+        <input
+          formControlName="available"
+          type="text"
+          class="form-control"
+        />
+      </div>
+    <button
+      type="submit"
+      class="btn btn-success mt-3"
+    >
+      {{ isEdit ? "Actualizar" : "Registrar" }}
+    </button>
+  </form>
+</div>
