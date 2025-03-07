@@ -1,51 +1,149 @@
 <div class="container mx-auto">
+
+  @if (showSuccessAlert) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>¡Éxito!</strong> El libro ha sido {{ isEdit ? "actualizado" : "registrado" }} correctamente.
+      <button type="button" class="btn-close" (click)="showSuccessAlert = false"></button>
+    </div>
+  }
+
+  @if (showErrorAlert) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>¡Error!</strong> Ocurrió un problema al {{ isEdit ? "actualizar" : "registrar" }} el libro.
+      <button type="button" class="btn-close" (click)="showErrorAlert = false"></button>
+    </div>
+  }
+
+
   <h1 class="mb-3">
     {{ isEdit ? "Editar" : "Registrar" }} libro
   </h1>
-  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label class="form-label">Titulo</label>
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Campo Título -->
+    <div class="mb-3">
+      <label class="form-label">Título</label>
       <input
         formControlName="title"
         type="text"
         class="form-control"
+        [ngClass]="{
+          'is-invalid': f['title'].touched && f['title'].invalid,
+          'is-valid': f['title'].touched && f['title'].valid
+        }"
       />
+      @if (f['title'].touched && f['title'].invalid) {
+        <div class="invalid-feedback">
+          @if (f['title'].errors?.['required']) {
+            <span>El título es obligatorio.</span>
+          }
+          @if (f['title'].errors?.['minlength']) {
+            <span>El título debe tener al menos 3 caracteres.</span>
+          }
+        </div>
+      }
     </div>
-    <div>
+
+    <!-- Campo Autor -->
+    <div class="mb-3">
       <label class="form-label">Autor</label>
       <input
         formControlName="author"
         type="text"
         class="form-control"
+        [ngClass]="{
+          'is-invalid': f['author'].touched && f['author'].invalid,
+          'is-valid': f['author'].touched && f['author'].valid
+        }"
       />
+      @if (f['author'].touched && f['author'].invalid) {
+        <div class="invalid-feedback">
+          @if (f['author'].errors?.['required']) {
+            <span>El autor es obligatorio.</span>
+          }
+          @if (f['author'].errors?.['minlength']) {
+            <span>El autor debe tener al menos 3 caracteres.</span>
+          }
+        </div>
+      }
     </div>
-    <div>
-        <label class="form-label">ISBN</label>
-        <input
-          formControlName="isbn"
-          type="text"
-          class="form-control"
-        />
-      </div>
-      <div>
-        <label class="form-label">Stock</label>
-        <input
-          formControlName="quantity"
-          type="text"
-          class="form-control"
-        />
-      </div>
-      <div>
-        <label class="form-label">Stock para prestamo</label>
-        <input
-          formControlName="available"
-          type="text"
-          class="form-control"
-        />
-      </div>
+
+    <!-- Campo ISBN -->
+    <div class="mb-3">
+      <label class="form-label">ISBN</label>
+      <input
+        formControlName="isbn"
+        type="text"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': f['isbn'].touched && f['isbn'].invalid,
+          'is-valid': f['isbn'].touched && f['isbn'].valid
+        }"
+      />
+      @if (f['isbn'].touched && f['isbn'].invalid) {
+        <div class="invalid-feedback">
+          @if (f['isbn'].errors?.['required']) {
+            <span>El ISBN es obligatorio.</span>
+          }
+          @if (f['isbn'].errors?.['pattern']) {
+            <span>El ISBN debe tener entre 10 y 13 dígitos.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Campo Stock -->
+    <div class="mb-3">
+      <label class="form-label">Stock</label>
+      <input
+        formControlName="quantity"
+        type="number"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': f['quantity'].touched && f['quantity'].invalid,
+          'is-valid': f['quantity'].touched && f['quantity'].valid
+        }"
+      />
+      @if (f['quantity'].touched && f['quantity'].invalid) {
+        <div class="invalid-feedback">
+          @if (f['quantity'].errors?.['required']) {
+            <span>El stock es obligatorio.</span>
+          }
+          @if (f['quantity'].errors?.['min']) {
+            <span>El stock mínimo es 1.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Campo Stock para préstamo -->
+    <div class="mb-3">
+      <label class="form-label">Stock para préstamo</label>
+      <input
+        formControlName="available"
+        type="number"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': f['available'].touched && f['available'].invalid,
+          'is-valid': f['available'].touched && f['available'].valid
+        }"
+      />
+      @if (f['available'].touched && f['available'].invalid) {
+        <div class="invalid-feedback">
+          @if (f['available'].errors?.['required']) {
+            <span>El stock para préstamo es obligatorio.</span>
+          }
+          @if (f['available'].errors?.['min']) {
+            <span>El stock para préstamo no puede ser negativo.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Botón de envío -->
     <button
       type="submit"
       class="btn btn-success mt-3"
+      [disabled]="bookForm.invalid"
     >
       {{ isEdit ? "Actualizar" : "Registrar" }}
     </button>

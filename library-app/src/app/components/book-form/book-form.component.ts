@@ -7,17 +7,23 @@ import {
 } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-form',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.css',
 })
-export class BookFormComponent {
+export class BookFormComponent implements OnInit {
   bookForm: FormGroup;
   isEdit = false;
   bookId: number | null = null;
+
+  // Propiedades para las alertas
+  showSuccessAlert = false;
+  showErrorAlert = false;
 
   formBuilder = inject(FormBuilder);
   bookService = inject(BookService);
@@ -26,11 +32,11 @@ export class BookFormComponent {
 
   constructor() {
     this.bookForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      author: ['', Validators.required],
-      isbn: ['', Validators.required],
-      quantity: [0, Validators.required],
-      available: [0, Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      author: ['', [Validators.required, Validators.minLength(3)]],
+      isbn: ['', [Validators.required, Validators.pattern(/^\d{10,13}$/)]],
+      quantity: [0, [Validators.required, Validators.min(1)]],
+      available: [0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -47,20 +53,42 @@ export class BookFormComponent {
     });
   }
 
+  // Método para acceder a los controllers del form
+  get f() {
+    return this.bookForm.controls;
+  }
+
   onSubmit() {
-    console.log("ENTRO", this.bookForm, this.bookForm.invalid)
-    if (this.bookForm.invalid) return;
+    if (this.bookForm.invalid) {
+      this.bookForm.markAllAsTouched();
+      return;
+    }
 
     if (this.isEdit && this.bookId) {
       this.bookService
         .updateBook(this.bookId, this.bookForm.value)
-        .subscribe(() => {
-          this.router.navigate(['/']);
+        .subscribe({
+          next: () => {
+            this.showSuccessAlert = true;
+            setTimeout(() => {
+              this.router.navigate(['/']); 
+            }, 1500);
+          },
+          error: () => {
+            this.showErrorAlert = true; 
+          },
         });
     } else {
-    console.log("ENTRO ELSE", this.bookForm)
-      this.bookService.createBook(this.bookForm.value).subscribe(() => {
-        this.router.navigate(['/']);
+      this.bookService.createBook(this.bookForm.value).subscribe({
+        next: () => {
+          this.showSuccessAlert = true; 
+          setTimeout(() => {
+            this.router.navigate(['/']); 
+          }, 1500);
+        },
+        error: () => {
+          this.showErrorAlert = true; 
+        },
       });
     }
   }

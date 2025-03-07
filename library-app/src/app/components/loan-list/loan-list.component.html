@@ -1,8 +1,10 @@
 <div class="container">
-  <h2>Lista de prestamos</h2>
-  <button class="btn btn-primary btn-sm" (click)="goToCreate()">
-    Registrar prestamo
-  </button>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Lista de préstamos</h2>
+    <button class="btn btn-primary btn-sm" (click)="goToCreate()">
+      Registrar préstamo
+    </button>
+  </div>
   @if (loans.length > 0){
   <table class="table table-striped">
     <thead>
@@ -38,7 +40,11 @@
     </tbody>
   </table>
   } @else {
-  <h3>Sin registros.</h3>
-  <p>Registra un nuevo libro para ver algo aquí!!</p>
+    <div class="container text-center mt-5">
+      <div class="card border-0 shadow p-4 py-5">
+        <h1 class="display-4 text-muted mb-3">📆 Sin registros</h1>
+        <p class="lead text-muted mb-4">¡Registra un nuevo préstamo para ver algo aquí!</p>
+      </div>
+    </div>
   }
 </div>

@@ -1,8 +1,10 @@
 <div class="container">
-  <h2>Lista de Libros</h2>
-  <button class="btn btn-primary btn-sm" (click)="goToCreate()">
-    Agregar libro
-  </button>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Lista de Libros</h2>
+    <button class="btn btn-primary btn-sm" (click)="goToCreate()">
+      Agregar libro
+    </button>
+  </div>
   @if (books.length > 0){
   <table class="table table-striped">
     <thead>
@@ -38,7 +40,11 @@
     </tbody>
   </table>
   } @else {
-  <h1>Sin registros.</h1>
-  <p>Registra un nuevo libro para ver algo aquí!!</p>
+    <div class="container text-center mt-5">
+      <div class="card border-0 shadow p-4 py-5">
+        <h1 class="display-4 text-muted mb-3">📚 Sin registros</h1>
+        <p class="lead text-muted mb-4">¡Registra un nuevo libro para ver algo aquí!</p>
+      </div>
+    </div>
   }
 </div>
